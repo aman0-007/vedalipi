@@ -1,0 +1,187 @@
+/* ==========================================================================
+   Phonetic Transliteration CSS: Scholarly Suggestion Popup & Candidate UI
+   ========================================================================== */
+
+.phonetic-popup {
+  position: fixed;
+  display: none;
+  flex-direction: column;
+  background-color: var(--bg-editor);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  min-width: 270px;
+  max-width: 480px;
+  padding: 6px;
+  box-sizing: border-box;
+  animation: phoneticPopupFadeIn 0.1s ease-out;
+  pointer-events: auto;
+}
+
+.phonetic-popup.visible {
+  display: flex;
+}
+
+@keyframes phoneticPopupFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Popup Header */
+.phonetic-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px 6px 8px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 6px;
+}
+
+.phonetic-popup-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+}
+
+.phonetic-popup-shortcut {
+  font-size: 10.5px;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+}
+
+/* Candidate Suggestions List */
+.phonetic-candidates-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 2px;
+}
+
+.phonetic-candidate {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 5px 11px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.1s ease;
+  user-select: none;
+  text-align: left;
+  flex-grow: 1;
+  min-width: fit-content;
+}
+
+.phonetic-candidate:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+
+.phonetic-candidate.active {
+  background-color: var(--accent-subtle);
+  border-color: var(--accent-primary);
+}
+
+.candidate-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 3px;
+  background-color: rgba(37, 37, 37, 0.07);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.phonetic-candidate.active .candidate-badge {
+  background-color: var(--accent-primary);
+  color: #FCFAF5;
+}
+
+.candidate-text {
+  font-size: 18px;
+  color: var(--text-primary);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.candidate-text.devanagari {
+  font-family: var(--font-devanagari);
+}
+
+.candidate-text.latin {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.phonetic-candidate.active .candidate-text {
+  color: var(--accent-primary);
+}
+
+/* Footer Keyboard Shortcuts Guide */
+.phonetic-popup-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px 2px 8px;
+  margin-top: 5px;
+  border-top: 1px solid var(--border-color);
+  font-size: 10px;
+  color: var(--text-tertiary);
+  gap: 8px;
+}
+
+.phonetic-popup-footer kbd {
+  display: inline-block;
+  padding: 1px 4px;
+  font-size: 9.5px;
+  font-family: var(--font-mono);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  color: var(--text-secondary);
+}
+
+/* Toolbar Phonetic Toggle Button */
+.phonetic-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  font-weight: 500;
+}
+
+.phonetic-toggle-btn.active {
+  background-color: var(--accent-subtle);
+  border-color: var(--accent-border);
+  color: var(--accent-primary);
+}
+
+.phonetic-indicator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--text-tertiary);
+  display: inline-block;
+  transition: background-color 0.15s ease;
+}
+
+.phonetic-toggle-btn.active .phonetic-indicator-dot {
+  background-color: var(--accent-primary);
+}

@@ -1,0 +1,137 @@
+/* ==========================================================================
+   Responsive CSS: Mobile & Tablet Adaptations
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .btn-text-desktop {
+    display: none;
+  }
+
+  .btn {
+    padding: 0 7px;
+  }
+
+  .header-file-meta .filename-input {
+    width: 120px;
+  }
+
+  .unicode-inspector-pill {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 48px;
+    --status-bar-height: 30px;
+    --keyboard-height: 250px;
+  }
+
+  .app-header {
+    padding: 0 10px;
+    gap: 8px;
+  }
+
+  .brand-badge {
+    display: none;
+  }
+
+  .header-divider {
+    display: none;
+  }
+
+  .header-file-meta .filename-input {
+    width: 100px;
+    font-size: 11px;
+  }
+
+  .line-gutter {
+    width: 44px;
+    padding: 16px 8px 16px 2px;
+    font-size: 11px;
+  }
+
+  /* Mobile font size: 22-26px requirement */
+  .sanskrit-textarea {
+    padding: 16px 18px;
+    font-size: 24px;
+    line-height: 1.9;
+  }
+
+  .statusbar-left,
+  .statusbar-right {
+    gap: 10px;
+  }
+
+  .stat-item.hide-mobile {
+    display: none;
+  }
+
+  .quick-vedic-bar {
+    padding: 4px 8px;
+    gap: 4px;
+  }
+
+  .quick-bar-label {
+    display: none;
+  }
+
+  .keyboard-body {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .key-grid {
+    grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+    gap: 4px;
+  }
+
+  .kb-key {
+    height: 40px;
+    min-width: 40px;
+  }
+
+  .key-char {
+    font-size: 19px;
+  }
+
+  .keyboard-action-row {
+    padding: 6px 8px;
+    gap: 6px;
+  }
+
+  .kb-action-key {
+    height: 34px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 0 6px;
+  }
+
+  .brand-title {
+    font-size: 13.5px;
+  }
+
+  .header-file-meta {
+    padding: 2px 4px;
+    gap: 3px;
+  }
+
+  .header-file-meta .filename-input {
+    width: 80px;
+  }
+
+  .save-status-badge {
+    padding: 1px 5px;
+    font-size: 9.5px;
+  }
+
+  .unicode-inspector-pill {
+    max-width: 140px;
+    font-size: 10px;
+  }
+}

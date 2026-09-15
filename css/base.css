@@ -1,0 +1,186 @@
+/* ==========================================================================
+   Base CSS: Modern Scholarly + Traditional Manuscript Visual Style
+   ========================================================================== */
+
+:root {
+  /* Color Theme - Light Mode (Warm Ivory & Traditional Manuscript) */
+  --bg-primary: #F7F4ED;           /* Warm Ivory - Calm scholarly backdrop */
+  --bg-secondary: #EFECE3;         /* Subtle recessed ivory */
+  --bg-surface: #F7F4ED;           /* Header & Toolbars match backdrop */
+  --bg-surface-elevated: #FCFAF5;  /* Raised panels */
+  --bg-editor: #FCFAF5;            /* Soft Cream - Primary manuscript page */
+  --bg-subtle: #EFECE3;
+  --bg-hover: #ECE7DC;
+  --bg-active: #DFD9CC;
+
+  --border-color: #DED8CC;         /* Warm Gray architectural hairlines */
+  --border-strong: #C8C1B2;
+  --border-focus: #B86B27;         /* Deep Saffron focus ring */
+
+  --text-primary: #252525;         /* Deep Charcoal - Crisp manuscript ink */
+  --text-secondary: #756B5E;       /* Muted Brown - Scholarly secondary */
+  --text-tertiary: #9E9384;        /* Subdued metadata */
+  --text-inverse: #FCFAF5;
+
+  /* Accent: Deep Saffron (Only as an accent, never dominant) */
+  --accent-primary: #B86B27;       /* Deep Saffron */
+  --accent-hover: #9E591D;
+  --accent-subtle: #FBF4EC;        /* Very gentle saffron tint */
+  --accent-border: #E8D1B5;
+  --accent-ring: rgba(184, 107, 39, 0.18);
+
+  /* Selection: Soft Saffron */
+  --selection-bg: #E8D1B5;
+  --selection-color: #252525;
+
+  /* Status Indicators (Restrained & Harmonious) */
+  --status-saved: #3F6244;         /* Muted scholarly sage green */
+  --status-saved-bg: #EDF3ED;
+  --status-saved-border: #C8DAC9;
+
+  --status-unsaved: #9E591D;       /* Muted warm amber */
+  --status-unsaved-bg: #FBF4EC;
+  --status-unsaved-border: #E8D1B5;
+
+  /* Gutter & Editor Specifics */
+  --gutter-bg: #F4EFE6;
+  --gutter-text: #968B7D;
+  --gutter-border: #DED8CC;
+
+  /* Virtual Keyboard Keys */
+  --key-bg: #FCFAF5;
+  --key-border: #DED8CC;
+  --key-hover: #F2EDE2;
+  --key-active: #E6E0D2;
+  --key-shadow: 0 1px 2px rgba(37, 37, 37, 0.04);
+
+  /* Shadows (Subtle, paper-like) */
+  --shadow-sm: 0 1px 2px rgba(37, 37, 37, 0.04);
+  --shadow-md: 0 3px 6px -1px rgba(37, 37, 37, 0.06), 0 1px 3px -1px rgba(37, 37, 37, 0.04);
+  --shadow-lg: 0 8px 16px -2px rgba(37, 37, 37, 0.08), 0 3px 6px -2px rgba(37, 37, 37, 0.04);
+
+  /* Radii (Gentle, scholarly, restrained) */
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-full: 9999px;
+
+  /* Typography Specifications */
+  --font-devanagari: "Noto Serif Devanagari", "Sanskrit 2003", "Kokila", "Shree Devanagari 714", "Devanagari Sangam MN", serif;
+  --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Layout Measurements */
+  --header-height: 50px;
+  --status-bar-height: 32px;
+  --keyboard-height: 270px;
+}
+
+/* Matching Dark Mode (Charcoal / Near-Black & Muted Warm Saffron) */
+[data-theme="dark"] {
+  --bg-primary: #191817;           /* Charcoal / Near-black canvas */
+  --bg-secondary: #201E1D;
+  --bg-surface: #1E1D1B;
+  --bg-surface-elevated: #262422;
+  --bg-editor: #1B1A18;            /* Soft deep charcoal editor surface */
+  --bg-subtle: #262422;
+  --bg-hover: #2E2B28;
+  --bg-active: #383430;
+
+  --border-color: #38342E;         /* Warm Grayish Charcoal */
+  --border-strong: #4C463E;
+  --border-focus: #C4782B;
+
+  --text-primary: #EDE8DF;         /* Warm Off-White text */
+  --text-secondary: #A39B8F;       /* Muted Sand / Warm Gray */
+  --text-tertiary: #736C60;
+  --text-inverse: #191817;
+
+  /* Saffron Accent (Muted in dark mode) */
+  --accent-primary: #C4782B;
+  --accent-hover: #D4883A;
+  --accent-subtle: rgba(196, 120, 43, 0.12);
+  --accent-border: rgba(196, 120, 43, 0.3);
+  --accent-ring: rgba(196, 120, 43, 0.28);
+
+  --selection-bg: #453725;         /* Soft dark saffron selection */
+  --selection-color: #F7F4ED;
+
+  --status-saved: #6BA876;
+  --status-saved-bg: rgba(107, 168, 118, 0.12);
+  --status-saved-border: rgba(107, 168, 118, 0.28);
+
+  --status-unsaved: #D4883A;
+  --status-unsaved-bg: rgba(212, 136, 58, 0.12);
+  --status-unsaved-border: rgba(212, 136, 58, 0.28);
+
+  --gutter-bg: #171615;
+  --gutter-text: #665F54;
+  --gutter-border: #38342E;
+
+  --key-bg: #22201E;
+  --key-border: #38342E;
+  --key-hover: #2B2825;
+  --key-active: #36322E;
+  --key-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 3px 6px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.45);
+}
+
+/* Box sizing reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 1px;
+}
+
+/* Restrained, Minimal Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}

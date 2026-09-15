@@ -1,0 +1,275 @@
+/* ==========================================================================
+   Keyboard CSS: Sanskrit & Vedic Virtual Keyboard Layout & Keys
+   ========================================================================== */
+
+.virtual-keyboard-panel {
+  display: flex;
+  flex-direction: column;
+  height: var(--keyboard-height);
+  max-height: 48vh;
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  z-index: 15;
+  transition: transform 0.25s ease, height 0.2s ease;
+  user-select: none;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.virtual-keyboard-panel.hidden {
+  display: none;
+}
+
+/* Keyboard Header: Tabs & Window Controls */
+.keyboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 12px;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-color);
+  gap: 8px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* Segmented Tabs Container */
+.keyboard-tabs {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.keyboard-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.kb-tab-btn {
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 500;
+  border-radius: var(--radius-xs);
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition: all 0.12s ease;
+  cursor: pointer;
+}
+
+.kb-tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.kb-tab-btn.active {
+  color: var(--text-primary);
+  background-color: var(--bg-editor);
+  border-color: var(--border-color);
+  font-weight: 500;
+}
+
+.keyboard-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* Quick Vedic Bar: Always accessible at top of keys */
+.quick-vedic-bar {
+  display: flex;
+  align-items: center;
+  padding: 4px 12px;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.quick-bar-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+/* Main Keyboard Keys Scroll Area */
+.keyboard-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px 14px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--bg-primary);
+  box-sizing: border-box;
+}
+
+/* Key Category Section */
+.key-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.key-section-header {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-left: 2px;
+}
+
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+  gap: 5px;
+}
+
+/* Individual Virtual Key */
+.kb-key {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  min-width: 44px;
+  padding: 0;
+  background-color: var(--key-bg);
+  border: 1px solid var(--key-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--key-shadow);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.kb-key.quick-key {
+  height: 32px;
+  min-width: 36px;
+  padding: 0 4px;
+  background-color: var(--bg-editor);
+}
+
+.kb-key:hover {
+  background-color: var(--key-hover);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.kb-key:active {
+  background-color: var(--key-active);
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.key-char {
+  font-family: var(--font-devanagari);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--text-primary);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.key-char.combining-char {
+  color: var(--accent-primary);
+}
+
+/* Vedic special highlight keys */
+.kb-key.key-vedic {
+  background-color: var(--bg-editor);
+  border-color: var(--border-color);
+}
+
+.kb-key.key-vedic:hover {
+  background-color: var(--accent-subtle);
+  border-color: var(--accent-border);
+}
+
+/* ==========================================================================
+   Bottom Action Row: Halanta, Space, Backspace, Enter
+   ========================================================================== */
+.keyboard-action-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.kb-action-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  background-color: var(--key-bg);
+  border: 1px solid var(--key-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: var(--key-shadow);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  user-select: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.kb-action-key:hover {
+  background-color: var(--key-hover);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.kb-action-key:active {
+  background-color: var(--key-active);
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.kb-action-key.kb-action-space {
+  flex: 1;
+  min-width: 140px;
+  letter-spacing: 0.02em;
+}
+
+.kb-action-key svg {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.kb-action-key:hover svg {
+  color: var(--text-primary);
+}
+
+.action-key-symbol {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+}

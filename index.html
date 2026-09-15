@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="sa" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Sanskrit & Vedic Text Editor</title>
+    <meta name="description" content="A professional client-side web editor for Sanskrit and Vedic Devanagari text with phonetic Hinglish-to-Sanskrit suggestions, virtual Vedic keyboard, and full Unicode svara mark support." />
+    <meta property="og:title" content="Sanskrit & Vedic Text Editor" />
+    <meta property="og:description" content="A professional client-side web editor for Sanskrit and Vedic Devanagari text with phonetic Hinglish-to-Sanskrit suggestions, virtual Vedic keyboard, and full Unicode svara mark support." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Typography: Noto Serif Devanagari (Sanskrit), Inter (UI), JetBrains Mono (Code/Unicode) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+Devanagari:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <!-- Pure CSS Modules -->
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/editor.css" />
+    <link rel="stylesheet" href="/css/keyboard.css" />
+    <link rel="stylesheet" href="/css/transliteration.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body>
+    <!-- Hidden file input for file manager -->
+    <input type="file" id="fileInput" accept=".txt,text/plain" style="display: none;" />
+
+    <div id="app">
+      <!-- App Header & Unified Controls Bar -->
+      <header class="app-header" id="appHeader">
+        <!-- Left: Brand & File Metadata -->
+        <div class="header-left">
+          <div class="header-brand">
+            <div class="brand-symbol" aria-hidden="true">सं</div>
+            <div class="brand-titles">
+              <h1 class="brand-title">
+                <span>वेदलिपि</span>
+                <span class="brand-badge">Manuscript Editor</span>
+              </h1>
+            </div>
+          </div>
+
+          <div class="header-divider" aria-hidden="true"></div>
+
+          <!-- Document Filename & Status Badge -->
+          <div class="header-file-meta" id="headerFileMeta">
+            <span class="file-meta-icon" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+            </span>
+            <input
+              type="text"
+              id="filenameInput"
+              class="filename-input"
+              value="sri_suktam.txt"
+              title="Click to rename document"
+              aria-label="Document file name"
+              spellcheck="false"
+            />
+            <span id="saveStatusBadge" class="save-status-badge saved" title="File Save Status">
+              <span class="status-dot"></span>Saved
+            </span>
+          </div>
+        </div>
+
+        <!-- Right: Action Controls & Tools -->
+        <div class="header-right" id="appToolbar" role="toolbar" aria-label="Editor controls">
+          <!-- File Operations -->
+          <div class="toolbar-group">
+            <button type="button" id="newBtn" class="btn" title="Create New File (Ctrl+N)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="12" y1="18" x2="12" y2="12"></line>
+                <line x1="9" y1="15" x2="15" y2="15"></line>
+              </svg>
+              <span class="btn-text-desktop">New</span>
+            </button>
+
+            <button type="button" id="openBtn" class="btn" title="Open .txt File (Ctrl+O)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span class="btn-text-desktop">Open</span>
+            </button>
+
+            <button type="button" id="saveBtn" class="btn btn-primary" title="Save as UTF-8 .txt (Ctrl+S)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
+              <span class="btn-text-desktop">Save UTF-8</span>
+            </button>
+          </div>
+
+          <div class="toolbar-separator" aria-hidden="true"></div>
+
+          <!-- History: Undo / Redo & Zoom -->
+          <div class="toolbar-group">
+            <button type="button" id="undoBtn" class="btn btn-icon" title="Undo (Ctrl+Z)" disabled>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              </svg>
+            </button>
+
+            <button type="button" id="redoBtn" class="btn btn-icon" title="Redo (Ctrl+Y)" disabled>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+              </svg>
+            </button>
+
+            <button type="button" id="zoomOutBtn" class="btn btn-icon" title="Decrease Font Size">
+              <span style="font-weight: 600; font-size: 11px;">A−</span>
+            </button>
+            <button type="button" id="zoomInBtn" class="btn btn-icon" title="Increase Font Size">
+              <span style="font-weight: 600; font-size: 13px;">A+</span>
+            </button>
+          </div>
+
+          <div class="toolbar-separator" aria-hidden="true"></div>
+
+          <!-- Sanskrit Modes & Tools -->
+          <div class="toolbar-group">
+            <button type="button" id="phoneticToggleBtn" class="btn phonetic-toggle-btn active" title="Phonetic Sanskrit Typing: Active (Type English words to suggest Sanskrit) — Shortcut: Ctrl+M">
+              <span class="phonetic-indicator-dot"></span>
+              <span style="font-family: var(--font-devanagari); font-weight: 600; font-size: 13px;">सं</span>
+              <span class="btn-text-desktop">Phonetic (EN→सं)</span>
+            </button>
+
+            <button type="button" id="kbToggleBtn" class="btn btn-active" title="Toggle Virtual Sanskrit & Vedic Keyboard">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                <line x1="6" y1="8" x2="6.01" y2="8"></line>
+                <line x1="10" y1="8" x2="10.01" y2="8"></line>
+                <line x1="14" y1="8" x2="14.01" y2="8"></line>
+                <line x1="18" y1="8" x2="18.01" y2="8"></line>
+                <line x1="6" y1="12" x2="6.01" y2="12"></line>
+                <line x1="18" y1="12" x2="18.01" y2="12"></line>
+                <line x1="7" y1="16" x2="17" y2="16"></line>
+              </svg>
+              <span class="btn-text-desktop">Keyboard</span>
+            </button>
+
+            <button type="button" id="copyBtn" class="btn" title="Copy Text to Clipboard">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span class="btn-text-desktop">Copy</span>
+            </button>
+          </div>
+
+          <div class="toolbar-separator" aria-hidden="true"></div>
+
+          <!-- Theme Toggle -->
+          <div class="toolbar-group">
+            <button type="button" id="themeToggleBtn" class="btn btn-icon" title="Toggle Theme" aria-label="Toggle Dark/Light theme">
+              <!-- Populated dynamically via JS -->
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- App Workspace: Editor Container & Virtual Keyboard -->
+      <main class="app-workspace" id="appWorkspace">
+        <div class="editor-wrapper" id="editorContainer">
+          <div class="editor-container">
+            <!-- Synchronized Line Numbers Gutter -->
+            <div class="line-gutter" id="lineGutter" aria-hidden="true">
+              <div class="line-number"><span class="line-number-text">1</span></div>
+            </div>
+
+            <!-- Main Textarea Wrapper -->
+            <div class="textarea-wrapper">
+              <textarea
+                id="sanskritEditor"
+                class="sanskrit-textarea"
+                placeholder="अत्र देवनागरी अथवा वैदिक-संस्कृत-पाठं लिखन्तु... (Type or open Sanskrit/Vedic text here)"
+                spellcheck="false"
+                autocapitalize="off"
+                autocomplete="off"
+                autocorrect="off"
+                aria-label="Sanskrit and Vedic Text Content"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Drag & Drop Overlay -->
+          <div class="drag-drop-overlay" id="dropOverlay" aria-hidden="true">
+            <div class="drag-drop-box">
+              <div class="drag-drop-title">Drop .txt file to open</div>
+              <div class="drag-drop-sub">Unicode text will be loaded with exact character fidelity</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Built-in Sanskrit / Vedic Virtual Keyboard Panel -->
+        <div class="virtual-keyboard-panel" id="virtualKeyboard" role="region" aria-label="Virtual Sanskrit Keyboard">
+          <!-- Dynamically populated via VirtualKeyboard class -->
+        </div>
+      </main>
+
+      <!-- Status Bar -->
+      <footer class="app-statusbar" id="appStatusbar">
+        <div class="statusbar-left">
+          <div class="stat-item" title="Total Lines">
+            <span class="stat-label">Lines:</span>
+            <span class="stat-value" id="statLines">0</span>
+          </div>
+          <div class="stat-item" title="Total Words">
+            <span class="stat-label">Words:</span>
+            <span class="stat-value" id="statWords">0</span>
+          </div>
+          <div class="stat-item" title="Unicode Characters">
+            <span class="stat-label">Chars:</span>
+            <span class="stat-value" id="statChars">0</span>
+          </div>
+          <div class="stat-item hide-mobile" title="UTF-8 Byte Size">
+            <span class="stat-label">Size:</span>
+            <span class="stat-value" id="statBytes">0 B</span>
+          </div>
+        </div>
+
+        <div class="statusbar-right">
+          <!-- Unicode inspector showing current cursor character and code point -->
+          <div class="unicode-inspector-pill" id="unicodeInspector" title="Unicode Code Points at/before Cursor">
+            <span style="color: var(--text-tertiary);">Cursor:</span> U+0000
+          </div>
+          <div class="stat-item" title="Current Cursor Line and Column">
+            <span class="stat-value" id="statCursor">Ln 1, Col 1</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Floating Sanskrit Phonetic Suggestions Popup -->
+    <div id="phoneticPopup" class="phonetic-popup" role="listbox" aria-label="Sanskrit Transliteration Suggestions"></div>
+
+    <!-- Application Script (Vanilla ES Module) -->
+    <script type="module" src="/js/app.js"></script>
+  </body>
+</html>
+
+
