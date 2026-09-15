@@ -1,0 +1,19 @@
+{
+  "name": "Vedalipi — Sanskrit & Vedic Text Editor",
+  "short_name": "Vedalipi",
+  "description": "Client-side Sanskrit and Vedic text editor with a custom virtual keyboard.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F7F4ED",
+  "theme_color": "#B86B27",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

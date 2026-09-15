@@ -11,6 +11,16 @@ import { PhoneticSuggester } from './transliteration/suggestion-popup.js';
 import { getCaretCoordinates } from './transliteration/caret-position.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+  if (isStandalone) {
+    document.documentElement.style.touchAction = 'manipulation';
+    document.body.style.overscrollBehavior = 'none';
+    document.addEventListener('gesturestart', (event) => event.preventDefault(), { passive: false });
+    document.addEventListener('gesturechange', (event) => event.preventDefault(), { passive: false });
+    document.addEventListener('gestureend', (event) => event.preventDefault(), { passive: false });
+  }
+
   // DOM references
   const textarea = document.getElementById('sanskritEditor');
   const lineGutter = document.getElementById('lineGutter');
@@ -135,6 +145,14 @@ document.addEventListener('DOMContentLoaded', () => {
   editor.setText(initialVedicVerse, true);
   fileManager.setFileName('sri_suktam.txt');
   fileManager.setDirty(false);
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./service-worker.js').catch((error) => {
+        console.warn('Service worker registration failed:', error);
+      });
+    });
+  }
 
   // Expose to window for debugging if needed
   window.__sanskritEditor = editor;

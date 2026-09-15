@@ -44,9 +44,12 @@
   gap: 2px;
   overflow-x: auto;
   scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.keyboard-tabs::-webkit-scrollbar {
+.keyboard-tabs::-webkit-scrollbar,
+.quick-vedic-bar::-webkit-scrollbar,
+.keyboard-body::-webkit-scrollbar {
   display: none;
 }
 
@@ -90,7 +93,8 @@
   border-bottom: 1px solid var(--border-color);
   gap: 6px;
   overflow-x: auto;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   flex-shrink: 0;
   box-sizing: border-box;
 }
@@ -109,6 +113,8 @@
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   padding: 10px 14px 12px 14px;
   display: flex;
   flex-direction: column;
