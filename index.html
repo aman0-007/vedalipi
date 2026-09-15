@@ -33,7 +33,7 @@
         <!-- Left: Brand & File Metadata -->
         <div class="header-left">
           <div class="header-brand">
-            <div class="brand-symbol" aria-hidden="true">सं</div>
+            <div class="brand-symbol" aria-hidden="true">वे</div>
             <div class="brand-titles">
               <h1 class="brand-title">
                 <span>वेदलिपि</span>
@@ -187,8 +187,10 @@
                 autocapitalize="off"
                 autocomplete="off"
                 autocorrect="off"
+                inputmode="none"
                 aria-label="Sanskrit and Vedic Text Content"
               ></textarea>
+              <div id="mobileCaret" class="mobile-caret" aria-hidden="true"></div>
             </div>
           </div>
 
@@ -229,10 +231,6 @@
         </div>
 
         <div class="statusbar-right">
-          <!-- Unicode inspector showing current cursor character and code point -->
-          <div class="unicode-inspector-pill" id="unicodeInspector" title="Unicode Code Points at/before Cursor">
-            <span style="color: var(--text-tertiary);">Cursor:</span> U+0000
-          </div>
           <div class="stat-item" title="Current Cursor Line and Column">
             <span class="stat-value" id="statCursor">Ln 1, Col 1</span>
           </div>

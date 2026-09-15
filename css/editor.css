@@ -75,6 +75,30 @@
   background-color: var(--bg-editor);
 }
 
+.mobile-caret {
+  position: absolute;
+  width: 2px;
+  min-width: 2px;
+  background: var(--accent-primary);
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px rgba(184, 107, 39, 0.15);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+  will-change: opacity, left, top, height;
+  transition: left 70ms linear, top 70ms linear, height 70ms linear, opacity 80ms linear;
+  animation: mobile-caret-blink 0.8s steps(1, end) infinite;
+}
+
+.mobile-caret.visible {
+  opacity: 1;
+}
+
+@keyframes mobile-caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.2; }
+}
+
 /* Main Sanskrit & Vedic Textarea */
 .sanskrit-textarea {
   width: 100%;

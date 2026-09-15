@@ -387,26 +387,3 @@
   color: var(--text-secondary);
 }
 
-.unicode-inspector-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background-color: var(--bg-editor);
-  border: 1px solid var(--border-color);
-  padding: 2px 8px;
-  border-radius: var(--radius-xs);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-primary);
-  max-width: 320px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.unicode-inspector-pill .char-preview {
-  font-family: var(--font-devanagari);
-  font-weight: 500;
-  color: var(--accent-primary);
-  font-size: 13px;
-}

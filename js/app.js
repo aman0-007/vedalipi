@@ -8,6 +8,7 @@ import { FileManager } from './files/file-manager.js';
 import { VirtualKeyboard } from './keyboard/keyboard.js';
 import { Toolbar } from './ui/toolbar.js';
 import { PhoneticSuggester } from './transliteration/suggestion-popup.js';
+import { getCaretCoordinates } from './transliteration/caret-position.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // DOM references
@@ -18,16 +19,71 @@ document.addEventListener('DOMContentLoaded', () => {
   const editorContainer = document.getElementById('editorContainer');
   const fileInput = document.getElementById('fileInput');
   const phoneticPopup = document.getElementById('phoneticPopup');
+  const mobileCaret = document.getElementById('mobileCaret');
 
   if (!textarea || !lineGutter) {
     console.error('Core editor elements not found.');
     return;
   }
 
+  const updateMobileCaret = () => {
+    if (!mobileCaret || !window.matchMedia || !window.matchMedia('(pointer: coarse)').matches) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      const position = textarea.selectionStart ?? textarea.value.length;
+      const caret = getCaretCoordinates(textarea, position);
+      const wrapperRect = textarea.closest('.textarea-wrapper')?.getBoundingClientRect();
+
+      if (!wrapperRect) {
+        return;
+      }
+
+      mobileCaret.style.left = `${caret.left - wrapperRect.left + 2}px`;
+      mobileCaret.style.top = `${caret.top - wrapperRect.top + 2}px`;
+      mobileCaret.style.height = `${Math.max(caret.lineHeight || 24, 22)}px`;
+      mobileCaret.classList.add('visible');
+    });
+  };
+
   // 1. Initialize Editor
   const isMobile = window.innerWidth <= 768;
+  const defaultFontSize = isMobile ? 18 : 26;
+  textarea.setAttribute('inputmode', 'none');
+
+  if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
+    textarea.style.caretColor = 'transparent';
+
+    textarea.addEventListener('pointerdown', () => {
+      const position = textarea.selectionStart ?? textarea.value.length;
+      textarea.focus({ preventScroll: true });
+      setTimeout(() => {
+        textarea.setSelectionRange(position, position);
+        updateMobileCaret();
+      }, 0);
+    });
+
+    textarea.addEventListener('focus', updateMobileCaret);
+    textarea.addEventListener('click', updateMobileCaret);
+    textarea.addEventListener('keyup', updateMobileCaret);
+    textarea.addEventListener('select', updateMobileCaret);
+    textarea.addEventListener('scroll', updateMobileCaret);
+    textarea.addEventListener('keydown', (event) => {
+      if (isMobile) {
+        event.preventDefault();
+      }
+    });
+
+    textarea.addEventListener('beforeinput', (event) => {
+      if (isMobile) {
+        event.preventDefault();
+      }
+    });
+  }
+
   const editor = new SanskritEditor(textarea, lineGutter, {
-    defaultFontSize: isMobile ? 24 : 26,
+    defaultFontSize,
     minFontSize: 18,
     maxFontSize: 36
   });
@@ -64,8 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     statWords: document.getElementById('statWords'),
     statChars: document.getElementById('statChars'),
     statBytes: document.getElementById('statBytes'),
-    statCursor: document.getElementById('statCursor'),
-    unicodeInspector: document.getElementById('unicodeInspector')
+    statCursor: document.getElementById('statCursor')
   };
 
   const toolbar = new Toolbar(editor, fileManager, keyboard, domElements, phoneticSuggester);

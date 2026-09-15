@@ -211,16 +211,5 @@ export class Toolbar {
     if (this.dom.statCursor) {
       this.dom.statCursor.textContent = `Ln ${ctx.line}, Col ${ctx.col}`;
     }
-
-    if (this.dom.unicodeInspector) {
-      if (ctx.inspectList && ctx.inspectList.length > 0) {
-        const itemsHtml = ctx.inspectList.map((item) => {
-          return `<span>[<span class="char-preview">${item.char}</span> ${item.hex}]</span>`;
-        }).join(' ');
-        this.dom.unicodeInspector.innerHTML = `<span style="color: var(--text-tertiary);">Cursor:</span> ${itemsHtml}`;
-      } else {
-        this.dom.unicodeInspector.innerHTML = `<span style="color: var(--text-tertiary);">Unicode:</span> U+0000`;
-      }
-    }
   }
 }
